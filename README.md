@@ -3,7 +3,7 @@
 
 기술 스택 & 사용 도구
 테스트 자동화
-- Playwright, Selenium, Appium, Maestro
+- (Javascrip/Python) Playwright, Selenium, Appium, Maestro
 
 버그 및 이슈 관리
 - Jira, Github
