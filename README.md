@@ -5,6 +5,8 @@
 # 기술 스택 & 사용 도구
 테스트 자동화
 - (Javascrip/Python) Playwright, Selenium, Appium, Maestro
+
+# 
 Playwright (Web) [예시](https://github.com/shwooo/portfolio/blob/main/%EA%B0%80%EA%B2%A9%EC%84%A4%EC%A0%95.js)
 Maestro (App) [예시](https://github.com/shwooo/portfolio/blob/main/%EC%9D%B4%EB%A9%94%EC%9D%BC%EB%A1%9C%EA%B7%B8%EC%9D%B8.yaml)
 
