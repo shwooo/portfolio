@@ -1,0 +1,42 @@
+appId: com.looko.acloset
+name: 이메일 로그인 
+env:
+  EMAIL: "maestroemail@acloset.app"
+  PASSWORD: "1q2w3e!@"
+  NICKNAME: "maestroemail"
+tags:
+  - 로그인
+  - 이메일 로그인
+  - 온보딩 완료
+  - 옷 20개 이상
+  - 코디 1개 이상
+onFlowStart:
+  - runScript: ../utils.js
+jsEngine: graaljs
+
+---
+
+# login 버튼 클릭
+- tapOn: ${output.도구.텍스트_가져오기('login')}
+- assertVisible: ${output.도구.텍스트_가져오기('login')}
+- tapOn: ${output.도구.텍스트_가져오기('startWithAnotherMethod')}
+- tapOn:
+    text: ${output.도구.텍스트_가져오기('continueWithEmail')}
+    below:
+      text: Bottom Sheet
+- assertVisible: ${output.도구.텍스트_가져오기('signIn')}
+
+# login 페이지에서 ID/PW 입력
+- tapOn: ${output.도구.텍스트_가져오기('enterEmail-Message')}
+- inputText: ${EMAIL}
+- tapOn: ${output.도구.텍스트_가져오기('intro.signIn.enterPasswordMsg')}
+- inputText: ${PASSWORD}
+- tapOn: ${output.도구.텍스트_가져오기('intro.signIn.enterPasswordMsg')}
+- hideKeyboard
+- tapOn:
+    text: ${output.도구.텍스트_가져오기('signIn')}
+    index: 1
+
+# 로그인 후 확인 동작
+- runFlow:
+    file: settings/loginCheck.yaml
