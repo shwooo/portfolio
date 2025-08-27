@@ -1,0 +1,80 @@
+appId: com.looko.acloset
+name: 로그인 후 잔여 동작 확인(이 스크립트는 단독으로 사용 X)
+tags:
+  - 로그인 후 바텀시트 확인
+  - 로그인 후 마이페이지에서 닉네임 확인
+
+onFlowStart:
+  - runScript: ../../utils.js
+jsEngine: graaljs
+
+---
+# iOS 에서 맞춤형 광고 팝업 노출 확인
+- runFlow:
+    when:
+      visible: ${output.도구.텍스트_가져오기('the_permission_well_request_shortly_will_only_be_used_to_ensure_smooth_service_for_you_and_to_provide_personalized_ads_based_on_apples_policy')}
+      platform: iOS
+    commands:
+      - tapOn: ${output.도구.텍스트_가져오기('next')}
+
+
+# 탭 스타일 선택 바텀시트 확인
+- runFlow:
+    when:
+      visible: ${output.도구.텍스트_가져오기('select_the_tab_style_you_prefer')}
+    commands:
+      - tapOn: ${output.도구.텍스트_가져오기('ai_focused_style')}
+      - tapOn: ${output.도구.텍스트_가져오기('done')}
+
+# 월간 리포트 팝업 확인
+- runFlow:
+    when:
+      visible: ${output.도구.텍스트_가져오기('monthly_report_has_arrived')}
+    commands:
+      - tapOn: ${output.도구.텍스트_가져오기('label_text')}
+
+# 팝업 바텀시트 닫기
+- runFlow:
+    when:
+      visible: ${output.도구.텍스트_가져오기('DontShowThisAgain')}
+    commands:
+      - tapOn: ${output.도구.텍스트_가져오기('DontShowThisAgain')}
+      - assertNotVisible: ${output.도구.텍스트_가져오기('DontShowThisAgain')}
+
+# 홈 탭으로 진입 했는 지 확인.
+# 네비게이션 세팅이 Closet Focused
+- runFlow:
+    when:
+      visible: ${output.도구.텍스트_가져오기('stylist')}
+    commands:
+      - assertVisible:
+          text: ${output.도구.텍스트_가져오기('stylist')}
+          index: 0
+      - assertVisible:
+          text: ${output.도구.텍스트_가져오기('stylist')}
+          index: 1
+
+# 네비게이션 세팅이 AI Focused
+- runFlow:
+    when:
+      visible:
+        text: ${output.도구.텍스트_가져오기('common.tab.home')}
+        index: 1
+    commands:
+      - assertVisible: ${output.도구.텍스트_가져오기('hello')} ${NICKNAME}
+
+# 마이 페이지로 진입
+- tapOn:
+    id: icon-person_outlined_v3
+- tapOn:
+    id: icon-edit_outlined_v3
+
+# 닉네임 일치 확인
+- assertVisible:
+    text: ${NICKNAME} # Replace with the expected text underneath "Nickname"
+    above:
+      text: ${output.도구.텍스트_가져오기('common.nickname')}
+
+# 메인 탭으로 되돌아가기
+- tapOn:
+    id: icon-arrow_left_outlined_v3
